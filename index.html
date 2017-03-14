@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+</head>
+<body ng-app='app'>
+  <div ng-controller='homeController as homeCtrl'>
+    <div class='container'>
+      <h1>Origin Weather Application</h1>
+    </div>
+    <button>Los Angeles</button>
+    <button>New York</button>
+    <button>Washington D.C.</button>
+    <button>London</button>
+    <button>Tokyo</button>
+    <br>
+    <div class="input-group search-bar">
+      <form ng-submit="homeCtrl.fetch()">
+      <input type="text"
+        ng-model='homeCtrl.search'
+        class="form-control"
+        placeholder="Enter city here."/>
+      <button>Go!</button>
+      </form>
+    </div>
+    <div id="main-info">
+      <h1>{{ homeCtrl.weather }}</h1>
+    </div>
+
+    <table>
+      <tr>
+        <td>City from Search</td>
+        <td>Time Stamp</td>
+      </tr>
+    </table>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+  <script src="weatherapp/weather.module.js"></script>
+  <script src="weatherapp/home/weather.controller.js"></script>
+</body>
+</html>
