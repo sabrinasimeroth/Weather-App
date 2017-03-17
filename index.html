@@ -3,37 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <title>Weather App</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body ng-app='app'>
   <div ng-controller='homeController as homeCtrl'>
-    <div class='container'>
-      <h1>Origin Weather Application</h1>
+    <div class="jumbotron">
+      <h1 class='container'>Origin Weather Application</h1>
     </div>
-    <button>Los Angeles</button>
-    <button>New York</button>
-    <button>Washington D.C.</button>
-    <button>London</button>
-    <button>Tokyo</button>
-    <br>
-    <div class="input-group search-bar">
-      <form ng-submit="homeCtrl.fetch()">
-      <input type="text"
-        ng-model='homeCtrl.search'
-        class="form-control"
-        placeholder="Enter city here."/>
-      <button>Go!</button>
+    <div class="container">
+      <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-primary" ng-click="homeCtrl.fetch('Los Angeles')">Los Angeles</button>
+        <button type="button" class="btn btn-primary" ng-click="homeCtrl.fetch('New York')">New York</button>
+        <button type="button" class="btn btn-primary" ng-click="homeCtrl.fetch('Washington D.C.')">Washington D.C.</button>
+        <button type="button" class="btn btn-primary" ng-click="homeCtrl.fetch('London')">London</button>
+        <button type="button" class="btn btn-primary" ng-click="homeCtrl.fetch('Tokyo')">Tokyo</button>
+      </div>
+      <br>
+      <form ng-submit="homeCtrl.fetch(homeCtrl.search)">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="input-group">
+              <input type="text" ng-model='homeCtrl.search' class="form-control" placeholder="Enter city here.">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Go!</button>
+              </span>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
       </form>
+      <br>
+      <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-info">
+          <div class="panel-heading">{{homeCtrl.weather.name}} Weather Information</div>
+          <!-- <pre>{{homeCtrl.weather | json}}</pre> -->
+          <div>
+          <h1 class="text-center">{{homeCtrl.weather.name}}</h1>
+          <p><a>Lat/Long: {{homeCtrl.weather.coord.lat}},{{homeCtrl.weather.coord.lon}}</a></p>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h4>Temperature</h4>
+              {{homeCtrl.weather.main.temp}}F
+            </div>
+            <div class="col-sm-4">
+              <h4>Pressure</h4>
+              {{homeCtrl.weather.main.pressure}}
+            </div>
+            <div class="col-sm-4">
+              <h4>Humidity</h4>
+              {{homeCtrl.weather.main.humidity}}%
+            </div>
+            <div class="col-sm-4">
+              <h4>Min Temperature</h4>
+              {{homeCtrl.weather.main.temp_min}}F
+            </div>
+            <div class="col-sm-4">
+              <h4>Max Temperature</h4>
+              {{homeCtrl.weather.main.temp_max}}F
+            </div>
+            <div class="col-sm-4">
+              <h4>Wind Speed</h4>
+              {{homeCtrl.weather.wind.speed}}mph
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <div class="panel panel-info">
+            <div class="panel-heading">Search History</div>
+            <table class="table table-striped">
+              <tr>
+                <td width="80%">City</td>
+                <td>Time Stamp</td>
+              </tr>
+              <tr ng-repeat="item in homeCtrl.history">
+                <td>{{item.name}}</td>
+                <td>{{item.timestamp | date: "MM/d/yy hh:mm:ss a"}}</td>
+              </tr>
+            </table>
+          </div>
+      </div>
     </div>
-    <div id="main-info">
-      <h1>{{ homeCtrl.weather }}</h1>
     </div>
-
-    <table>
-      <tr>
-        <td>City from Search</td>
-        <td>Time Stamp</td>
-      </tr>
-    </table>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
